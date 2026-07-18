@@ -1,0 +1,661 @@
+{
+  "name": "CrisisCom AI: Decentralized Emergency Broadcast & Relief Coordination Engine",
+  "nodes": [
+    {
+      "parameters": {
+        "resource": "message",
+        "guildId": {
+          "__rl": true,
+          "value": "1459506083105079308",
+          "mode": "list",
+          "cachedResultName": "pooja garibe's server",
+          "cachedResultUrl": "https://discord.com/channels/1459506083105079308"
+        },
+        "channelId": {
+          "__rl": true,
+          "value": "1475454518597779641",
+          "mode": "list",
+          "cachedResultName": "general",
+          "cachedResultUrl": "https://discord.com/channels/1475454517918040177/1475454518597779641"
+        },
+        "content": "={{ $json.text }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        1696,
+        704
+      ],
+      "id": "6af1c24d-024a-4d9c-aba8-8a114a22ef93",
+      "name": "Send a message",
+      "webhookId": "23f107ca-daa2-4bb5-8fbb-5b9b75981b30",
+      "credentials": {
+        "discordBotApi": {
+          "id": "fMQ3fDnyXk1FAHCC",
+          "name": "Discord Bot account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "poojagaribe6@gmail.com",
+        "subject": "=🚨 URGENT: {{ $('Webhook').item.json.body.status }} for {{ $('Append row in sheet').item.json.Disaster }}",
+        "message": "=<div style=\"font-family: Arial, sans-serif; border: 1px solid #ccc; padding: 20px; border-radius: 10px; max-width: 600px;\">\n  <h2 style=\"color: #d9534f;\">🚨 URGENT: Disaster Incident Reported</h2>\n  <p>Dear Disaster Management Team,</p>\n  <p>The <b>CrisisCom AI Network Node</b> has intercepted a new emergency signal. Immediate evaluation is required.</p>\n  \n  <table style=\"width: 100%; border-collapse: collapse; margin-top: 15px;\">\n    <tr style=\"background-color: #f2f2f2;\">\n      <td style=\"padding: 10px; border: 1px solid #ddd;\"><b>Incident Type</b></td>\n      <td style=\"padding: 10px; border: 1px solid #ddd;\">{{ $('Append row in sheet').item.json.Disaster }}</td>\n    </tr>\n    <tr>\n      <td style=\"padding: 10px; border: 1px solid #ddd;\"><b>Location</b></td>\n      <td style=\"padding: 10px; border: 1px solid #ddd;\">{{ $('Append row in sheet').item.json.Location }}</td>\n    </tr>\n    <tr style=\"background-color: #f2f2f2;\">\n      <td style=\"padding: 10px; border: 1px solid #ddd;\"><b>Timestamp</b></td>\n      <td style=\"padding: 10px; border: 1px solid #ddd;\">{{ $('Append row in sheet').item.json['Date/Time'] }}</td>\n    </tr>\n  </table>\n\n  <p style=\"margin-top: 20px;\">\n    <b>Assessment:</b> The situation is marked as <b>{{ $('Webhook').item.json.body.status }}</b>. Please initiate standard response protocols immediately.\n  </p>\n  <hr>\n  <p style=\"font-size: 12px; color: #777;\">System Managed by CrisisCom AI Middleware</p>\n</div>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1664,
+        48
+      ],
+      "id": "dc2fe725-c584-43fa-b283-523ad2a55b73",
+      "name": "Send a message1",
+      "webhookId": "a3d6cde6-7425-49d5-be17-ff9f8044fe35",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "qpKvDPCT02kRwmEN",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "1929001913",
+        "text": "={{ $json.text }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1680,
+        384
+      ],
+      "id": "fa5125ca-4ae3-4bae-bb55-417ba6e78c3e",
+      "name": "Send a text message",
+      "webhookId": "6f9ac136-2998-49fd-b5ee-758bb7d37870",
+      "credentials": {
+        "telegramApi": {
+          "id": "RYxuls5ZJFfc2LeV",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "meta-llama/llama-4-scout-17b-16e-instruct",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        496,
+        752
+      ],
+      "id": "e9763c4e-64be-4f98-8953-2a6e0fbde8fd",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "Bq2h0k4fO5XrXkmb",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Disaster Type: {{ $json.Disaster }}\n\nLocation: {{ $json.Location }}\nSeverity:{{ $('Webhook').item.json.body.status }}\nGenerate the emergency alert now.",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "You are an Emergency Broadcast AI.  Generate a short, professional emergency alert.  Rules: - Maximum 280 characters. - Do not ask questions. - Do not explain your reasoning. - Return only the final emergency alert."
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        272,
+        448
+      ],
+      "id": "eee21a26-8d4e-48dc-8e94-b20cf1a9328a",
+      "name": "Emergency Formatter"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are an expert emergency dispatch system. Generate a clean, formal email text report for the Disaster Management Authorities. \n\nDO NOT use markdown formatting. DO NOT use asterisks (*) or double stars (**). Use simple line breaks.\n\nFollow this exact template structure:\n\nCrisisCom AI — Incident Ingestion Report\n\nDear Disaster Management Team,\n\nThis is an automated operational alert from the regional ingestion engine. A new incident has been verified and requires immediate evaluation.\n\n[INCIDENT DATA SUMMARY]\nIncident Type: {{ $('Append row in sheet').item.json.Disaster }}\nAffected Location: {{ $('Append row in sheet').item.json.Location }}\nSystem Timestamp: \n{{ $('Append row in sheet').item.json['Date/Time'] }}\nCurrent Assessment:\nThe situation is marked as CRITICAL. Immediate resource allocation, medical routing, and ground coordination are advised for the targeted region.\n\nThe system has simultaneously updated public channels on Telegram and Discord to coordinate civil assistance. Please initiate official response protocols.\n\nRespectfully submitted,\nCrisisCom AI Middleware Engine",
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        1328,
+        48
+      ],
+      "id": "a3f52320-af47-42ac-a97a-4450e1ab0b9b",
+      "name": "Gmail Alert Engine"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "8c658250-0083-4ce3-8d8d-84cfca7729a0",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -464,
+        448
+      ],
+      "id": "deae3074-a175-4459-b3c6-97dcf556136a",
+      "name": "Webhook",
+      "webhookId": "8c658250-0083-4ce3-8d8d-84cfca7729a0"
+    },
+    {
+      "parameters": {
+        "text": "={{ $json.text }}",
+        "attributes": {
+          "attributes": [
+            {
+              "name": "disaster_type",
+              "description": "={{ $('Webhook').item.json.body.disaster_type }}"
+            },
+            {
+              "name": "location",
+              "description": "={{ $('Webhook').item.json.body.cleaned_location }}"
+            },
+            {
+              "name": "urgency leval",
+              "description": "Determine the level of urgency for the disaster report. Classify it as 'High', 'Medium', or 'Low' based on the threat level described in the text"
+            },
+            {
+              "name": "action steps ",
+              "description": "Extract the specific safety instructions or immediate steps provided for civilians to follow to stay safe during the incident"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1.2,
+      "position": [
+        656,
+        448
+      ],
+      "id": "8742898f-5597-4d13-badf-67f96240b504",
+      "name": "Information Extractor"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={{ JSON.stringify($json, null, 2) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        112,
+        448
+      ],
+      "id": "5adc23d4-8073-462f-902d-a87d7481e56e",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "model": "meta-llama/llama-4-scout-17b-16e-instruct",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        1328,
+        224
+      ],
+      "id": "b64e2b72-cbe4-4d2d-b61b-738c1fe7112f",
+      "name": "Groq Chat Model2",
+      "credentials": {
+        "groqApi": {
+          "id": "Bq2h0k4fO5XrXkmb",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "meta-llama/llama-4-scout-17b-16e-instruct",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        1344,
+        560
+      ],
+      "id": "91200c95-c6ee-4ba3-90d3-e318cb3637b3",
+      "name": "Groq Chat Model3",
+      "credentials": {
+        "groqApi": {
+          "id": "Bq2h0k4fO5XrXkmb",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "meta-llama/llama-4-scout-17b-16e-instruct",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        1360,
+        880
+      ],
+      "id": "11f2d81a-8927-4377-b4f5-9390a3b69b16",
+      "name": "Groq Chat Model1",
+      "credentials": {
+        "groqApi": {
+          "id": "Bq2h0k4fO5XrXkmb",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2496,
+        688
+      ],
+      "id": "da01caf0-910f-43da-9b62-0d562b80c9bd",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1gvAApDw8dMQOuoMwURAi-37gRhJadfFwOhswgC3mIIc",
+          "mode": "list",
+          "cachedResultName": "emergency diases backup",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1gvAApDw8dMQOuoMwURAi-37gRhJadfFwOhswgC3mIIc/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1gvAApDw8dMQOuoMwURAi-37gRhJadfFwOhswgC3mIIc/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Disaster": "={{ $json.body.disaster_type }}",
+            "Location": "={{ $json.body.cleaned_location }}",
+            "Date/Time": "={{ $json.body.timestamp }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Date/Time",
+              "displayName": "Date/Time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Disaster",
+              "displayName": "Disaster",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Location",
+              "displayName": "Location",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -144,
+        448
+      ],
+      "id": "f58292e8-e2d4-4686-ade2-4f3b6307203f",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "okLOENWFMptZYTIs",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are an expert emergency dispatch system. Generate a clean, formal email text report for the Disaster Management Authorities. \n\nDO NOT use markdown formatting. DO NOT use asterisks (*) or double stars (**). Use simple line breaks.\n\nFollow this exact template structure:\n\nCrisisCom AI — Incident Ingestion Report\n\nDear Disaster Management Team,\n\nThis is an automated operational alert from the regional ingestion engine. A new incident has been verified and requires immediate evaluation.\n\n[INCIDENT DATA SUMMARY]\nIncident Type: {{ $('Append row in sheet').item.json.Disaster }}\nAffected Location: {{ $('Append row in sheet').item.json.Location }}\nSystem Timestamp: \n{{ $('Append row in sheet').item.json['Date/Time'] }}\nCurrent Assessment:\nThe situation is marked as CRITICAL. Immediate resource allocation, medical routing, and ground coordination are advised for the targeted region.\n\nThe system has simultaneously updated public channels on Telegram and Discord to coordinate civil assistance. Please initiate official response protocols.\n\nRespectfully submitted,\nCrisisCom AI Middleware Engine",
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        1344,
+        384
+      ],
+      "id": "e18bb9d9-321e-4d29-8d97-15330740455d",
+      "name": "Teligram Alert Engine1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are an expert emergency dispatch system. Generate a clean, formal email text report for the Disaster Management Authorities. \n\nDO NOT use markdown formatting. DO NOT use asterisks (*) or double stars (**). Use simple line breaks.\n\nFollow this exact template structure:\n\nCrisisCom AI — Incident Ingestion Report\n\nDear Disaster Management Team,\n\nThis is an automated operational alert from the regional ingestion engine. A new incident has been verified and requires immediate evaluation.\n\n[INCIDENT DATA SUMMARY]\nIncident Type: {{ $('Append row in sheet').item.json.Disaster }}\nAffected Location: {{ $('Append row in sheet').item.json.Location }}\nSystem Timestamp: \n{{ $('Append row in sheet').item.json['Date/Time'] }}\nCurrent Assessment:\nThe situation is marked as CRITICAL. Immediate resource allocation, medical routing, and ground coordination are advised for the targeted region.\n\nThe system has simultaneously updated public channels on Telegram and Discord to coordinate civil assistance. Please initiate official response protocols.\n\nRespectfully submitted,\nCrisisCom AI Middleware Engine",
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        1360,
+        704
+      ],
+      "id": "1511460d-c6b8-4af2-9c74-2d26526d8290",
+      "name": "Gmail Alert Engine1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://cloud.langfuse.com/api/public/traces",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Basic cGstbGYtMjQ1NWZiYWItNDY4MC00NjFkLTg2YjMtMmQ4MzQxZGJlNzY1OnNrLWxmLWM3NzM3OTI2LTc2NTAtNDQyMi04Y2I1LWM0MGI2ZTNjNTNkYw=="
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "id",
+              "value": "={{ $execution.id }}"
+            },
+            {
+              "name": "name",
+              "value": "CrisisCom Incident"
+            },
+            {
+              "name": "input",
+              "value": "={{ JSON.stringify($('Edit Fields').item.json) }}"
+            },
+            {
+              "name": "output",
+              "value": "={{ $('Emergency Formatter').item.json.text }}"
+            },
+            {
+              "name": "userId",
+              "value": "pooja-garibe"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        2256,
+        384
+      ],
+      "id": "a754b0da-106b-4678-9ce2-8e4812f62e90",
+      "name": "langfuse trace"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "numberInputs": 3,
+        "options": {
+          "includeUnpaired": true
+        }
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        2000,
+        368
+      ],
+      "id": "f1d23186-555b-4a77-ac62-57275c8f1625",
+      "name": "Merge"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Emergency Formatter",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Information Extractor",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Emergency Formatter": {
+      "main": [
+        [
+          {
+            "node": "Information Extractor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail Alert Engine": {
+      "main": [
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Information Extractor": {
+      "main": [
+        [
+          {
+            "node": "Gmail Alert Engine",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Teligram Alert Engine1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Gmail Alert Engine1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Emergency Formatter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Gmail Alert Engine",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Teligram Alert Engine1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Gmail Alert Engine1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a text message": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Teligram Alert Engine1": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail Alert Engine1": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "langfuse trace",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "e7dab470-e7f7-47d8-a4cd-66c8118c48bf",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "e5aea0593cd39f87110c057dbf699ba53db9523b0aca43eabd4a79913931f939"
+  },
+  "id": "4gN8O93HJPDzTR9Fo8n65",
+  "tags": []
+}
