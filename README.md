@@ -3,7 +3,7 @@
 > *Problem:* In disasters like the Latur Earthquake, official alerts are delayed. Manual communication fails.
 > *Solution:* CrisisCom is an autonomous AI grid that converts raw disaster signals into clear, actionable alerts and dispatches them in *< 3 seconds* across multiple channels.
 
-![License](https://img.shields.io/badge/License-MIT-green) ![Built with](https://img.shields.io/badge/Built%20with-n8n-red) ![AI](https://img.shields.io/badge/AI-Groq%20%7C%20Langfuse-blue) ![Status](https://img.shields.io/badge/Status-Active-success)
+![Built with](https://img.shields.io/badge/Built%20with-n8n-red) ![AI](https://img.shields.io/badge/AI-Groq%20%7C%20Langfuse-blue) ![Status](https://img.shields.io/badge/Status-Active-success)
 
 ### 🌐 Live Demo & Architecture
 *[Live Website Link Yaha Daalo]* | *[Video Demo Link Yaha Daalo]*
