@@ -34,7 +34,7 @@ Ingest (Webhook) -> Structure (Google Sheets) -> AI Agent (Groq - Formats Messag
 
 ### 📸 Screenshots
 <img src="Images/dashbord_form.png" width="400" alt="Dashboard Form"> <img src="Images/langfuse_live_trace.png" width="400" alt="Langfuse Live Trace">
-<img src="Images/location.png" width="400" alt="Location"> <img src="Images/log_image.png" width="400" alt="Log Image">
+<img src="Images/location.png" width="400" alt="Location"> <img src="Images/n8n_workflow.png" width="400" alt="Log Image">
 
 ### 🚀 Setup
 1. Import workflow/crisiscom-workflow.json into your n8n instance.
