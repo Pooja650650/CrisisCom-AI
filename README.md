@@ -1,52 +1,16 @@
-# 🚨 CrisisCom-AI | Autonomous Disaster Communication Grid
+# React + Vite
 
-> *Problem:* In disasters like the Latur Earthquake, official alerts are delayed. Manual communication fails.
-> *Solution:* CrisisCom is an autonomous AI grid that converts raw disaster signals into clear, actionable alerts and dispatches them in *< 3 seconds* across multiple channels.
+This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
 
-![License](https://img.shields.io/badge/License-MIT-green) ![Built with](https://img.shields.io/badge/Built%20with-n8n-red) ![AI](https://img.shields.io/badge/AI-Groq%20%7C%20Langfuse-blue) ![Status](https://img.shields.io/badge/Status-Active-success)
+Currently, two official plugins are available:
 
-### 🌐 Live Demo & Architecture
-*[Live Website Link Yaha Daalo]* | *[Video Demo Link Yaha Daalo]*
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-### ⚡ How It Works
-Ingest (Webhook) -> Structure (Google Sheets) -> AI Agent (Groq - Formats Message) -> Parallel Dispatch (Gmail, Telegram, Discord) -> Trace (Langfuse)
+## React Compiler
 
-1.  *Ingest:* Receives disaster signal via Webhook (Earthquake, Flood etc.)
-2.  *Structure:* Logs and structures data in Google Sheets to avoid duplication.
-3.  *AI Agent:* AI converts technical data into a calm, human-readable emergency message.
-4.  *Dispatch:* Sends alert in parallel to Email, Telegram, and Discord.
-5.  *Observe:* Every trace is monitored in Langfuse for 100% transparency.
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-### ✨ Key Features
-- *< 3s Latency:* Automated parallel dispatch, no manual delay.
-- *Zero Duplicate Alerts:* Google Sheets logic prevents spamming.
-- *Multi-Channel:* Reaches people where they are - Email, Telegram, Discord (Scalable to SMS/WhatsApp).
-- *Full Observability:* Langfuse integration to track every alert, error, and latency.
-- *Low-Cost:* Runs on free-tier stack, operational cost < ₹500/month.
+## Expanding the Oxlint configuration
 
-### 🛠️ Tech Stack
-- *Orchestrator:* n8n
-- *AI:* Groq (Llama 3), Langfuse for Tracing
-- *Database:* Google Sheets
-- *Channels:* Gmail, Telegram Bot API, Discord Webhook
-- *Frontend (Dashboard):* React.js
-
-### 📸 Screenshots
-(Add your n8n workflow screenshot and alert screenshots here)
-![Workflow](workflow/screenshot.png)
-![Telegram Alert](screenshots/telegram-alert.png)
-
-### 🚀 Setup
-1. Import workflow/crisiscom-workflow.json into your n8n instance.
-2. Connect your Google Sheets, Gmail, Telegram, Discord credentials.
-3. Add your Groq and Langfuse API keys.
-4. Activate the workflow.
-
-### 🔮 Future Scope
-- Integration with IMD & NDMA official APIs.
-- Add SMS and WhatsApp via Twilio.
-- AI Voice Call alerts for remote villages.
-- Crowdsourced disaster reporting via chatbot.
-
----
-*Built by Pooja for a safer, more connected India
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
