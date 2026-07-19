@@ -6,7 +6,7 @@
 ![Built with](https://img.shields.io/badge/Built%20with-n8n-red) ![AI](https://img.shields.io/badge/AI-Groq%20%7C%20Langfuse-blue) ![Status](https://img.shields.io/badge/Status-Active-success)
 
 ### 🌐 Live Demo & Architecture
-<a href="https://drive.google.com/file/d/1QFVj0XKlLlbSdkoP6vxITRs5aBddfHWt/view?pli=1" target="_blank"> watch_demo_video </a> <br>
+<a href="https://drive.google.com/file/d/1Q1P-B4pbuhQzmI0ZXVfKs4FjJbKg1cY4/view" target="_blank"> watch_demo_video </a> <br>
 <a href="https://crisis-com-ai.vercel.app/" target="_blank"> view_my_website </a>
 
 ### ⚡ How It Works
