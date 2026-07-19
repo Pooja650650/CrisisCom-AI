@@ -7,7 +7,9 @@
 
 ### 🌐 Live Demo & Architecture
 <a href="https://drive.google.com/file/d/1Q1P-B4pbuhQzmI0ZXVfKs4FjJbKg1cY4/view" target="_blank"> watch_demo_video </a> <br>
-<a href="https://crisis-com-ai.vercel.app/" target="_blank"> view_my_website </a>
+<a href="https://crisis-com-ai.vercel.app/" target="_blank"> view_my_website </a><br>
+<a href="https://docs.google.com/spreadsheets/d/1gvAApDw8dMQOuoMwURAi-37gRhJadfFwOhswgC3mIIc/edit?gid=0#gid=0" target="_blank"> google_sheet_data_storage </a>href
+<a href="https://drive.google.com/file/d/133IZ4OVncpQ8w20NDzZRBwVjhF_v_wen/view" target="_blank"> n8n_json_file </a>href
 
 ### ⚡ How It Works
 Ingest (Webhook) -> Structure (Google Sheets) -> AI Agent (Groq - Formats Message) -> Parallel Dispatch (Gmail, Telegram, Discord) -> Trace (Langfuse)
